@@ -1,37 +1,74 @@
 package fr.hetic;
+import java.io.*;
 
 public class Calculateur {
     public static void main(String[] args) {
-        if (args.length != 3) {
-          System.out.println("Usage: java Calculateur <nombre1> <opérateur> <nombre2>");
-            System.out.println("Opérateurs valides : +, -, x.");
-            return;
+
+        double num1, num2;
+
+        System.out.println("Veuillez saisir le chemin du dossier contenant les fichiers d'opérations:");
+        String folderPath = System.console().readLine();
+
+        if (folderPath == null || folderPath.isEmpty()) {
+            folderPath = System.getProperty("user.dir");
         }
-        double nombre1, nombre2, resultat;
+
+        File folder = new File(folderPath);
+
+        System.out.println("Entrez le premier nombre:");
+        num1 = Double.parseDouble(System.console().readLine());
+
+        String operator = "";
+
+        while (!operator.equals("+") && !operator.equals("-") && !operator.equals("*")) {
+            System.out.println("Entrez l'opérateur (+, -, *):");
+            operator = System.console().readLine();
+            operator = operator.replaceAll("\\s", "");
+        }
+
+        System.out.println("Entrez le deuxième nombre:");
+        num2 = Double.parseDouble(System.console().readLine());
+
+        Operation operation = OperationFactory.getOperation(operator);
+        double result = operation.execute(num1, num2);
+
+        writeResult(folder, operation.getClass().getSimpleName(), num1, operator, num2);
+
+        System.out.println("Le résultat est: " + result);
+    }
+
+    private static void writeResult(File folder, String operation, double num1, String operator, double num2) {
         try {
-            nombre1 = Double.parseDouble(args[0]);
-            nombre2 = Double.parseDouble(args[2]);
-        } catch (NumberFormatException e) {
-            System.out.println("Le premier et le troisième paramètre doivent être des nombres valides.");
-            return;
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File operationFile = new File(folder, operation + ".op");
+            File resultFile = new File(folder, operation + ".res");
+
+            FileWriter operationWriter = new FileWriter(operationFile);
+            operationWriter.write(String.format("%.2f %s %.2f", num1, operator, num2));
+            operationWriter.close();
+            FileWriter resultWriter = new FileWriter(resultFile);
+            double result = 0;
+            switch (operator) {
+                case "+":
+                    result = num1 + num2;
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    break;
+            }
+            resultWriter.write(String.valueOf(result));
+            resultWriter.close();
+
+            System.out.println("Opération et résultat écrits avec succès.");
+        } catch (IOException e) {
+            System.out.println("Erreur lors de l'écriture dans les fichiers.");
+            e.printStackTrace();
         }
-        String operateur = args[1];
-        
-        switch (operateur) {
-            case "+":
-                resultat = nombre1 + nombre2;
-                break;
-            case "-":
-                resultat = nombre1 - nombre2;
-                break;
-            case "x":
-                resultat = nombre1 * nombre2;
-                break;
-            default:
-                System.out.println("Opérateur non pris en charge.");
-                return;
-        }
-        System.out.println("Résultat : " + resultat);
     }
 }
-
