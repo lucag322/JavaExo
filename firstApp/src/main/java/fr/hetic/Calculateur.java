@@ -6,7 +6,7 @@ public class Calculateur {
 
         double num1, num2;
 
-        System.out.println("Veuillez saisir le chemin du dossier contenant les fichiers d'opérations:");
+        System.out.println("Veuillez saisir le chemin du dossier contenant les fichiers d'opérations:(si pas de fichier appuyer sur entrer)");
         String folderPath = System.console().readLine();
 
         if (folderPath == null || folderPath.isEmpty()) {
@@ -20,8 +20,8 @@ public class Calculateur {
 
         String operator = "";
 
-        while (!operator.equals("+") && !operator.equals("-") && !operator.equals("*")) {
-            System.out.println("Entrez l'opérateur (+, -, *):");
+        while (!operator.equals("+") && !operator.equals("-") && !operator.equals("x")) {
+            System.out.println("Entrez l'opérateur (+, -, x):");
             operator = System.console().readLine();
             operator = operator.replaceAll("\\s", "");
         }
@@ -58,7 +58,7 @@ public class Calculateur {
                 case "-":
                     result = num1 - num2;
                     break;
-                case "*":
+                case "x":
                     result = num1 * num2;
                     break;
             }

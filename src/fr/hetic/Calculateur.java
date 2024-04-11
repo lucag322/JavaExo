@@ -21,7 +21,7 @@ public class Calculateur {
         String operator = "";
 
         while (!operator.equals("+") && !operator.equals("-") && !operator.equals("*")) {
-            System.out.println("Entrez l'opérateur (+, -, *):");
+            System.out.println("Entrez l'opérateur (+, -, x):");
             operator = System.console().readLine();
             operator = operator.replaceAll("\\s", "");
         }
@@ -58,7 +58,7 @@ public class Calculateur {
                 case "-":
                     result = num1 - num2;
                     break;
-                case "*":
+                case "x":
                     result = num1 * num2;
                     break;
             }

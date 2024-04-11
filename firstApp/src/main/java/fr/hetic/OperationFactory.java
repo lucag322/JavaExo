@@ -7,7 +7,7 @@ public class OperationFactory {
                 return new Addition();
             case "-":
                 return new Subtraction();
-            case "*":
+            case "x":
                 return new Multiplication();
             default:
                 throw new IllegalArgumentException("Opérateur invalide: " + operator);
