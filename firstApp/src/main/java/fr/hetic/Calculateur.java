@@ -1,12 +1,17 @@
 package fr.hetic;
+
 import java.io.*;
 
 public class Calculateur {
+
     public static void main(String[] args) {
+
+        System.out.println(ConfigReader.getProperties("implementation"));
 
         double num1, num2;
 
-        System.out.println("Veuillez saisir le chemin du dossier contenant les fichiers d'opérations:(si pas de fichier appuyer sur entrer)");
+        System.out.println(
+                "Veuillez saisir le chemin du dossier contenant les fichiers d'opérations:(si pas de fichier appuyer sur entrer)");
         String folderPath = System.console().readLine();
 
         if (folderPath == null || folderPath.isEmpty()) {
@@ -71,4 +76,5 @@ public class Calculateur {
             e.printStackTrace();
         }
     }
+
 }
